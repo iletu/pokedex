@@ -28,7 +28,7 @@ async function loadPokemonDetails(pokemonUrl) {
     console.log(pokemonAbilities(pokemon));
     console.log(pokemon.sprites.other['official-artwork'].front_default);
 
-
+    renderPokemonBackground(pokemon)
     renderPokemonCard(pokemon);
 }
 
@@ -50,7 +50,7 @@ function renderPokemonTypes(pokemon) {
 
     for (let i = 0; i < types.length; i++) {
         console.log(types[i]);
-        typesHtml += `<p class="${types[i]}">${types[i]}</p>`
+        typesHtml += `<p class="${types[i]}">${types[i]}</p>`;
     }
     return typesHtml
 }
@@ -59,22 +59,37 @@ function renderPokemonTypes(pokemon) {
 function renderPokemonCard(pokemon) {
 
     document.getElementById('pokemon-card').innerHTML += `
-        <div class="pokemon-content">
-            <div>
-                 <img src="${pokemon.sprites.other['official-artwork'].front_default}">
-            </div>
+            <div class="pokemon-content">
+                <div class="pokemon-image">
+                    <div class="pokemon-background ${pokemonBackground(pokemon)}">
+                        <img src="${pokemon.sprites.other['official-artwork'].front_default}">
+                    </div>
+                </div>
 
-            <div class="pokemon-data">
-                <p>Nr. ${pokemon.id.toString().padStart(4, '0')}</p>
-               <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
-            </div>
+                <div class="pokemon-data">
+                    <p>Nr. ${pokemon.id.toString().padStart(4, '0')}</p>
+                    <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
+                </div>
 
-            <div class="types">
-             ${renderPokemonTypes(pokemon)}
+                <div class="types">
+                    ${renderPokemonTypes(pokemon)}
+                </div> 
             </div> 
-        </div> 
     `;
 }
+
+
+function pokemonBackground(pokemon) {
+    return pokemon.types[0].type.name
+}
+
+
+function renderPokemonBackground(pokemon) {
+    let background = pokemonBackground(pokemon);
+
+    console.log(background);
+}
+
 
 fetchPokemonData();
 
