@@ -1,4 +1,4 @@
-
+// Kleine Pokemonkarte
 
 async function fetchPokemonData() {
     let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
@@ -28,20 +28,10 @@ async function loadPokemonDetails(pokemonUrl) {
     console.log(pokemonAbilities(pokemon));
     console.log(pokemon.sprites.other['official-artwork'].front_default);
 
+
     renderPokemonCard(pokemon);
 }
 
-
-function pokemonAbilities(pokemon) {
-    let abilities = [];
-
-    for (let i = 0; i < pokemon.abilities.length; i++) {
-        let ability = pokemon.abilities[i].ability.name;
-        abilities.push(ability);
-    }
-    // console.log(abilities);
-    return abilities;
-}
 
 function pokemonType(pokemon) {
     let types = [];
@@ -51,6 +41,18 @@ function pokemonType(pokemon) {
         types.push(type);
     }
     return types;
+}
+
+
+function renderPokemonTypes(pokemon) {
+    let types = pokemonType(pokemon);
+    let typesHtml = ""
+
+    for (let i = 0; i < types.length; i++) {
+        console.log(types[i]);
+        typesHtml += `<p class="${types[i]}">${types[i]}</p>`
+    }
+    return typesHtml
 }
 
 
@@ -67,8 +69,8 @@ function renderPokemonCard(pokemon) {
                <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
             </div>
 
-            <div>
-                <p>${pokemonType(pokemon)}</p>
+            <div class="types">
+             ${renderPokemonTypes(pokemon)}
             </div> 
         </div> 
     `;
@@ -76,3 +78,20 @@ function renderPokemonCard(pokemon) {
 
 fetchPokemonData();
 
+
+
+
+
+
+// Große Ansicht (Overlay)
+
+function pokemonAbilities(pokemon) {
+    let abilities = [];
+
+    for (let i = 0; i < pokemon.abilities.length; i++) {
+        let ability = pokemon.abilities[i].ability.name;
+        abilities.push(ability);
+    }
+    // console.log(abilities);
+    return abilities;
+}

@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#pokemon-card {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 24px;
+
+    padding: 40px;
+}
+
+.pokemon-content {
+    width: 250px;
+    /* height: 330px; */
+
+    border-radius: 16px;
+    border: 1px solid #f2f2f2;
+
+    padding: 12px;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pokemon-content:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(40, 54, 24, 0.12);
+}
+
+img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.pokemon-data h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-style: normal;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.pokemon-data p {
+    font-family: 'Ubuntu';
+    font-weight: bold;
+    font-size: 13px;
+    color: #979797;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.types p {
+    font-family: 'Ubuntu';
+
+    min-width: 110px;
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    border-radius: 4px;
+    padding: 3px 8px;
+}
+
+.types {
+    display: flex;
+    flex-direction: row;
+
+    gap: 4px;
+}
+
+.normal {
+    background: var(--type-normal);
+}
+
+.fire {
+    background: var(--type-fire);
+}
+
+.water {
+    background: var(--type-water);
+}
+
+.electric {
+    background: var(--type-electric);
+}
+
+.grass {
+    background: var(--type-grass);
+}
+
+.ice {
+    background: var(--type-ice);
+}
+
+.fighting {
+    background: var(--type-fighting);
+}
+
+.poison {
+    background: var(--type-poison);
+}
+
+.ground {
+    background: var(--type-ground);
+}
+
+.flying {
+    background: var(--type-flying);
+}
+
+.psychic {
+    background: var(--type-psychic);
+}
+
+.bug {
+    background: var(--type-bug);
+}
+
+.rock {
+    background: var(--type-rock);
+}
+
+.ghost {
+    background: var(--type-ghost);
+}
+
+.dragon {
+    background: var(--type-dragon);
+}
+
+.dark {
+    background: var(--type-dark);
+}
+
+.steel {
+    background: var(--type-steel);
+}
+
+.fairy {
+    background: var(--type-fairy);
+}
