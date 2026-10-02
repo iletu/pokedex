@@ -1,3 +1,6 @@
+let loadedPokemon = [];
+
+
 // Kleine Pokemonkarte
 
 async function fetchPokemonData() {
@@ -20,9 +23,13 @@ async function loadPokemonUrls(pokemonData) {
 
 async function loadPokemonDetails(pokemonUrl) {
     let response = await fetch(pokemonUrl);
-    let pokemon = await response.json();
+    let pokemon = await response.json();    //  // komplettes Pokémon-Objekt z.B. Bulbasaur-Objekt
 
-    console.log(pokemon.id);
+    loadedPokemon.push(pokemon);   // speichert das komplette Pokémon-Objekt im Array / Cache
+
+
+    console.log(loadedPokemon);
+    console.log(pokemon.id);        // nur die ID des Pokémons
     console.log(pokemon.name);
     console.log(pokemon.types);
     console.log(pokemonAbilities(pokemon));
@@ -59,7 +66,7 @@ function renderPokemonTypes(pokemon) {
 function renderPokemonCard(pokemon) {
 
     document.getElementById('pokemon-card').innerHTML += `
-            <div class="pokemon-content">
+            <div class="pokemon-content" onclick="openDialog(${pokemon.id})">
                 <div class="pokemon-image">
                     <div class="pokemon-background ${pokemonBackground(pokemon)}">
                         <img src="${pokemon.sprites.other['official-artwork'].front_default}">
@@ -74,7 +81,7 @@ function renderPokemonCard(pokemon) {
                 <div class="types">
                     ${renderPokemonTypes(pokemon)}
                 </div> 
-            </div> 
+            </div>
     `;
 }
 
@@ -109,4 +116,83 @@ function pokemonAbilities(pokemon) {
     }
     // console.log(abilities);
     return abilities;
+}
+
+// Dialog
+
+const dialogRef = document.getElementById('myDialog');
+
+function openDialog(pokemonId) {
+    let pokemon = getPokemonById(pokemonId);
+
+    console.log(pokemon.stats);
+
+    console.log(pokemon.stats[0].stat.name);
+    console.log(pokemon.stats[0].base_stat);
+
+    renderPokemonDialog(pokemon);
+
+
+
+    dialogRef.showModal();
+    dialogRef.classList.add('opened');
+}
+
+
+function closeDialog() {
+    dialogRef.close();
+    dialogRef.classList.remove('opened');
+}
+
+function getPokemonById(pokemonId) {
+    for (let i = 0; i < loadedPokemon.length; i++) {
+        if (loadedPokemon[i].id === pokemonId) {
+            return loadedPokemon[i]
+        }
+    }
+}
+
+
+function renderPokemonDialog(pokemon) {
+    document.getElementById('pokemon-dialog').innerHTML = `
+        <div class="pokemon-dialog-content">
+
+            <div class="pokemon-dialog-header">
+                <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
+                <p>Nr. ${pokemon.id.toString().padStart(4, '0')}</p>
+            </div>
+
+            <div class="types">
+                ${renderPokemonTypes(pokemon)}
+            </div>
+
+            <div class="pokemon-dialog-image ${pokemonBackground(pokemon)}">
+                <img src="${pokemon.sprites.other['official-artwork'].front_default}">
+            </div>
+
+            <div class="pokemon-stats">
+                <h3>Base Stats</h3>
+                ${renderPokemonStats(pokemon)}
+            </div>
+
+        </div>
+    `;
+}
+
+function renderPokemonStats(pokemon) {
+    let statsHtml = '';
+
+    for (let i = 0; i < pokemon.stats.length; i++) {
+        let statName = pokemon.stats[i].stat.name;
+        let statValue = pokemon.stats[i].base_stat;
+
+        statsHtml += `
+            <div class="stat">
+                <p>${statName}</p>
+                <p>${statValue}</p>
+            </div>
+        `;
+    }
+
+    return statsHtml;
 }
