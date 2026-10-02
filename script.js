@@ -1,5 +1,5 @@
 let loadedPokemon = [];
-
+let currentPokemonId = 1;
 
 // Kleine Pokemonkarte
 
@@ -105,6 +105,7 @@ fetchPokemonData();
 
 
 
+
 // Große Ansicht (Overlay)
 
 function pokemonAbilities(pokemon) {
@@ -114,25 +115,22 @@ function pokemonAbilities(pokemon) {
         let ability = pokemon.abilities[i].ability.name;
         abilities.push(ability);
     }
-    // console.log(abilities);
+
     return abilities;
 }
+
 
 // Dialog
 
 const dialogRef = document.getElementById('myDialog');
 
+
 function openDialog(pokemonId) {
+    currentPokemonId = pokemonId;
+
     let pokemon = getPokemonById(pokemonId);
 
-    console.log(pokemon.stats);
-
-    console.log(pokemon.stats[0].stat.name);
-    console.log(pokemon.stats[0].base_stat);
-
     renderPokemonDialog(pokemon);
-
-
 
     dialogRef.showModal();
     dialogRef.classList.add('opened');
@@ -144,10 +142,11 @@ function closeDialog() {
     dialogRef.classList.remove('opened');
 }
 
+
 function getPokemonById(pokemonId) {
     for (let i = 0; i < loadedPokemon.length; i++) {
         if (loadedPokemon[i].id === pokemonId) {
-            return loadedPokemon[i]
+            return loadedPokemon[i];
         }
     }
 }
@@ -167,7 +166,17 @@ function renderPokemonDialog(pokemon) {
             </div>
 
             <div class="pokemon-dialog-image ${pokemonBackground(pokemon)}">
+
+                <button class="pokemon-arrow" onclick="previousPokemon()">
+                    &lt;
+                </button>
+
                 <img src="${pokemon.sprites.other['official-artwork'].front_default}">
+
+                <button class="pokemon-arrow" onclick="nextPokemon()">
+                    &gt;
+                </button>
+
             </div>
 
             <div class="pokemon-stats">
@@ -179,6 +188,8 @@ function renderPokemonDialog(pokemon) {
     `;
 }
 
+
+
 function renderPokemonStats(pokemon) {
     let statsHtml = '';
 
@@ -186,13 +197,38 @@ function renderPokemonStats(pokemon) {
         let statName = pokemon.stats[i].stat.name;
         let statValue = pokemon.stats[i].base_stat;
 
+        statName = statName.charAt(0).toUpperCase() + statName.slice(1);
+
         statsHtml += `
             <div class="stat">
                 <p>${statName}</p>
                 <p>${statValue}</p>
+
+                <div class="stat-bar">
+                    <div class="stat-bar-value" style="width: ${statValue}%"></div>
+                </div>
             </div>
         `;
     }
 
     return statsHtml;
+}
+
+function previousPokemon() {
+    if (currentPokemonId > 1) {
+        currentPokemonId--;
+
+        let pokemon = getPokemonById(currentPokemonId);
+        renderPokemonDialog(pokemon);
+    }
+}
+
+
+function nextPokemon() {
+    if (currentPokemonId < loadedPokemon.length) {
+        currentPokemonId++;
+
+        let pokemon = getPokemonById(currentPokemonId);
+        renderPokemonDialog(pokemon);
+    }
 }
