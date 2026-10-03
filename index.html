@@ -16,15 +16,23 @@
 
 
     <header>
+        <h1>Pokédex</h1>
 
+        <div class="search">
+            <input id="search-input" type="text" placeholder="Search Pokémon..." oninput="searchPokemon()">
+
+            <button onclick="searchPokemon()">Search</button>
+        </div>
     </header>
 
 
 
     <main>
         <section id="pokemon-card">
-            <!-- Hier werden die Pokémons gerendert -->
+            <!-- Hier werden die Pokemons gerendert -->
         </section>
+
+        <button onclick="loadMorePokemon()">Load more</button>
 
 
         <section>

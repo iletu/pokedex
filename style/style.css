@@ -205,7 +205,14 @@ img {
 /* Dialog mittig */
 
 #myDialog[open] {
-    margin: auto;
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
 }
 
 
@@ -385,8 +392,8 @@ img {
 .stat-bar-value {
     display: block;
 
-    height: 6px;
-    min-height: 6px;
+    height: 8px;
+    min-height: 8px;
 
     background-color: #70c745;
 }

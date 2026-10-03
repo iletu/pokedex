@@ -1,41 +1,55 @@
-let loadedPokemon = [];
+let allPokemon = [];        // Liste aller Pokémon aus der API
+let loadedPokemon = [];     // Pokémon aus Load more
+let pokemonCache = [];      // Cache aller heruntergeladenen Pokémon
+
 let currentPokemonId = 1;
+
+let currentIndex = 0;       // bis wohin wurde geladen?
+let pokemonPerLoad = 20;    // immer 20 Pokemon laden
+
+
+
 
 // Kleine Pokemonkarte
 
 async function fetchPokemonData() {
-    let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+    let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');
     let pokemonData = await response.json();
-    console.log(pokemonData);
 
-    loadPokemonUrls(pokemonData);
+    allPokemon = pokemonData.results;
+
+    console.log(allPokemon);
+
+    loadMorePokemon();
 }
 
+async function loadMorePokemon() {
+    let end = currentIndex + pokemonPerLoad;
 
-async function loadPokemonUrls(pokemonData) {
-    for (let i = 0; i < 20; i++) {
+    for (let i = currentIndex; i < end && i < allPokemon.length; i++) {
+        let pokemonUrl = allPokemon[i].url;
 
-        let pokemonUrl = pokemonData.results[i].url;
         await loadPokemonDetails(pokemonUrl);
     }
-}
 
+    currentIndex = end;
+}
 
 async function loadPokemonDetails(pokemonUrl) {
     let response = await fetch(pokemonUrl);
-    let pokemon = await response.json();    //  // komplettes Pokémon-Objekt z.B. Bulbasaur-Objekt
+    let pokemon = await response.json();
 
-    loadedPokemon.push(pokemon);   // speichert das komplette Pokémon-Objekt im Array / Cache
-
+    loadedPokemon.push(pokemon);
+    pokemonCache.push(pokemon);
 
     console.log(loadedPokemon);
-    console.log(pokemon.id);        // nur die ID des Pokémons
+    console.log(pokemon.id);
     console.log(pokemon.name);
     console.log(pokemon.types);
     console.log(pokemonAbilities(pokemon));
     console.log(pokemon.sprites.other['official-artwork'].front_default);
 
-    renderPokemonBackground(pokemon)
+    renderPokemonBackground(pokemon);
     renderPokemonCard(pokemon);
 }
 
@@ -125,6 +139,12 @@ function pokemonAbilities(pokemon) {
 const dialogRef = document.getElementById('myDialog');
 
 
+dialogRef.addEventListener('click', function (event) {
+    if (event.target === dialogRef) {
+        closeDialog();
+    }
+});
+
 function openDialog(pokemonId) {
     currentPokemonId = pokemonId;
 
@@ -134,19 +154,23 @@ function openDialog(pokemonId) {
 
     dialogRef.showModal();
     dialogRef.classList.add('opened');
+
+    document.body.style.overflow = 'hidden';
 }
 
 
 function closeDialog() {
     dialogRef.close();
     dialogRef.classList.remove('opened');
+
+    document.body.style.overflow = '';
 }
 
 
 function getPokemonById(pokemonId) {
-    for (let i = 0; i < loadedPokemon.length; i++) {
-        if (loadedPokemon[i].id === pokemonId) {
-            return loadedPokemon[i];
+    for (let i = 0; i < pokemonCache.length; i++) {
+        if (pokemonCache[i].id === pokemonId) {
+            return pokemonCache[i];
         }
     }
 }
@@ -213,22 +237,80 @@ function renderPokemonStats(pokemon) {
 
     return statsHtml;
 }
-
-function previousPokemon() {
+async function previousPokemon() {
     if (currentPokemonId > 1) {
-        currentPokemonId--;
+        let previousId = currentPokemonId - 1;
+        let pokemon = getPokemonById(previousId);
 
-        let pokemon = getPokemonById(currentPokemonId);
+        if (!pokemon) {
+            let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${previousId}`);
+            pokemon = await response.json();
+
+            pokemonCache.push(pokemon);
+        }
+
+        currentPokemonId = previousId;
         renderPokemonDialog(pokemon);
     }
 }
 
 
-function nextPokemon() {
-    if (currentPokemonId < loadedPokemon.length) {
-        currentPokemonId++;
+async function nextPokemon() {
+    let nextId = currentPokemonId + 1;
+    let pokemon = getPokemonById(nextId);
 
-        let pokemon = getPokemonById(currentPokemonId);
-        renderPokemonDialog(pokemon);
+    if (!pokemon) {
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nextId}`);
+        pokemon = await response.json();
+
+        pokemonCache.push(pokemon);
+    }
+
+    currentPokemonId = nextId;
+    renderPokemonDialog(pokemon);
+}
+
+// search pokemon
+async function searchPokemon() {
+    let searchInput = document.getElementById('search-input').value.toLowerCase();
+
+    if (searchInput.length < 3) {
+        document.getElementById('pokemon-card').innerHTML = '';
+
+
+        for (let i = 0; i < loadedPokemon.length; i++) {
+            renderPokemonCard(loadedPokemon[i]);
+        }
+
+        return;
+    }
+
+    let filteredPokemon = allPokemon.filter(
+        (pokemon) => pokemon.name.includes(searchInput)
+    );
+
+    document.getElementById('pokemon-card').innerHTML = '';
+
+
+    for (let i = 0; i < filteredPokemon.length; i++) {
+        let pokemon = getPokemonByName(filteredPokemon[i].name);
+
+        if (!pokemon) {
+            let response = await fetch(filteredPokemon[i].url);
+            pokemon = await response.json();
+
+            pokemonCache.push(pokemon);
+        }
+
+        renderPokemonCard(pokemon);
+    }
+}
+
+
+function getPokemonByName(pokemonName) {
+    for (let i = 0; i < pokemonCache.length; i++) {
+        if (pokemonCache[i].name === pokemonName) {
+            return pokemonCache[i];
+        }
     }
 }
