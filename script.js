@@ -286,8 +286,12 @@ async function searchPokemon() {
     }
 
     let filteredPokemon = allPokemon.filter(
-        (pokemon) => pokemon.name.includes(searchInput)
-    );
+        (pokemon) => pokemon.name.includes(searchInput));
+
+    if (filteredPokemon.length === 0) {
+        document.getElementById('pokemon-card').innerHTML = '<p>No Pokémon found</p>';
+        return;
+    }
 
     document.getElementById('pokemon-card').innerHTML = '';
 
