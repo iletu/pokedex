@@ -17,7 +17,10 @@
 
 
     <header>
-        <h1>Pokédex</h1>
+        <div class="pokedex-logo">
+            <img src="./assets/img/pokeball.png" alt="Pokéball">
+            <h1>Pokédex</h1>
+        </div>
 
         <div class="search">
             <input id="search-input" type="text" placeholder="Search Pokémon..." oninput="searchPokemon()">
@@ -39,7 +42,7 @@
             <!-- Hier werden die Pokemons gerendert -->
         </section>
 
-        <button onclick="loadMorePokemon()">Load more</button>
+        <button class="load-more-button" onclick="loadMorePokemon()">Load more</button>
 
 
         <section>
