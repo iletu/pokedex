@@ -1,0 +1,47 @@
+/* -------------------------------------------------- */
+/* Responsive */
+/* -------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 24px 16px;
+    }
+
+
+    .pokedex-logo {
+        margin-bottom: 20px;
+    }
+
+
+    .pokedex-logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .pokedex-logo h1 {
+        font-size: 28px;
+    }
+
+
+    .search {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+
+        gap: 8px;
+    }
+
+
+    .search input {
+        width: 100%;
+        min-width: 0;
+    }
+
+
+    .search button {
+        flex-shrink: 0;
+    }
+}

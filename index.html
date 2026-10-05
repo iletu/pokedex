@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Pokedex</title>
+
     <link rel="icon" type="image/x-icon" href="./assets/icon/pokeball-favicon-32x32.png">
 
-    <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/variable.css">
     <link rel="stylesheet" href="./style/fonts.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/dialog.css">
+    <link rel="stylesheet" href="./style/responsive.css">
 </head>
 
+
 <body>
-
-
 
     <header>
         <div class="pokedex-logo">
@@ -30,21 +33,29 @@
     </header>
 
 
-
     <main>
+
+        <!-- Loading Screen -->
         <div id="loading-screen">
             <img src="./assets/img/pokeball.png" alt="Loading" class="loading-pokeball">
+
             <p>Loading Pokémon...</p>
         </div>
 
 
+        <!-- Pokémon Karten -->
         <section id="pokemon-card">
-            <!-- Hier werden die Pokemons gerendert -->
+            <!-- Hier werden die Pokémons gerendert -->
         </section>
 
-        <button class="load-more-button" onclick="loadMorePokemon()">Load more</button>
+
+        <!-- Load More -->
+        <button class="load-more-button" onclick="loadMorePokemon()">
+            Load more
+        </button>
 
 
+        <!-- Pokémon Dialog -->
         <section>
             <dialog id="myDialog">
 
@@ -62,14 +73,16 @@
     </main>
 
 
-
-
     <footer>
         <img src="./assets/img/pokeball.png" alt="Pokéball">
         <p>© 2026 Pokédex</p>
     </footer>
 
-    <script src="./script.js"></script>
+
+    <!-- JavaScript -->
+    <script src="./script/templates.js"></script>
+    <script src="./script/script.js"></script>
+
 </body>
 
 </html>

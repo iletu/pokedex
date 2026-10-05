@@ -1,0 +1,243 @@
+/* -------------------------------------------------- */
+/* Große Pokémon Ansicht / Dialog */
+/* -------------------------------------------------- */
+
+#myDialog {
+    width: 420px;
+    max-width: calc(100% - 32px);
+    max-height: 90vh;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 24px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    position: relative;
+}
+
+
+/* Dialog mittig */
+
+#myDialog[open] {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+}
+
+
+/* Dunkler transparenter Hintergrund */
+
+#myDialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+
+/* -------------------------------------------------- */
+/* Dialog Inhalt */
+/* -------------------------------------------------- */
+
+.pokemon-dialog-content {
+    width: 100%;
+
+    background-color: white;
+}
+
+
+/* -------------------------------------------------- */
+/* Dialog Header */
+/* -------------------------------------------------- */
+
+.pokemon-dialog-header {
+    padding: 24px 24px 8px;
+}
+
+
+.pokemon-dialog-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+
+    margin-bottom: 4px;
+}
+
+
+.pokemon-dialog-header p {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+
+    color: #979797;
+}
+
+
+/* -------------------------------------------------- */
+/* Typen im Dialog */
+/* -------------------------------------------------- */
+
+.pokemon-dialog-content .types {
+    padding: 0 24px 12px;
+}
+
+
+.pokemon-dialog-content .types p {
+    min-width: 80px;
+}
+
+
+/* -------------------------------------------------- */
+/* Pokémon Bild im Dialog */
+/* -------------------------------------------------- */
+
+.pokemon-dialog-image {
+    width: 100%;
+    height: 260px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px;
+}
+
+
+.pokemon-dialog-image img {
+    width: 78%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background-color: transparent;
+
+    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.25));
+}
+
+
+/* -------------------------------------------------- */
+/* Pfeile */
+/* -------------------------------------------------- */
+
+.pokemon-arrow {
+    border: none;
+
+    background: transparent;
+
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* -------------------------------------------------- */
+/* Base Stats */
+/* -------------------------------------------------- */
+
+.pokemon-stats {
+    position: relative;
+
+    margin-top: -16px;
+
+    padding: 28px 20px 24px;
+
+    background-color: white;
+
+    border-radius: 20px 20px 0 0;
+}
+
+
+.pokemon-stats h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+
+    margin-bottom: 18px;
+}
+
+
+/* Einzelne Stat-Zeile */
+
+.stat {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+}
+
+
+.stat p {
+    font-family: 'Ubuntu', sans-serif;
+
+    margin: 0;
+
+    color: #555;
+}
+
+
+.stat p:first-child {
+    width: 105px;
+}
+
+
+.stat p:nth-child(2) {
+    width: 28px;
+
+    font-weight: bold;
+}
+
+
+/* -------------------------------------------------- */
+/* Stat Balken */
+/* -------------------------------------------------- */
+
+.stat-bar {
+    flex: 1;
+    height: 8px;
+
+    background-color: #e5e5e5;
+    border-radius: 4px;
+
+    overflow: hidden;
+}
+
+
+.stat-bar-value {
+    display: block;
+
+    height: 8px;
+    min-height: 8px;
+
+    background-color: #70c745;
+}
+
+
+/* -------------------------------------------------- */
+/* Schließen Button */
+/* -------------------------------------------------- */
+
+#myDialog>button {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
