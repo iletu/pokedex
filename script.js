@@ -23,7 +23,20 @@ async function fetchPokemonData() {
     loadMorePokemon();
 }
 
+
+function showLoadingScreen() {
+    document.getElementById('loading-screen').style.display = 'flex';
+}
+
+
+function hideLoadingScreen() {
+    document.getElementById('loading-screen').style.display = 'none';
+}
+
+
 async function loadMorePokemon() {
+    showLoadingScreen();
+
     let end = currentIndex + pokemonPerLoad;
 
     for (let i = currentIndex; i < end && i < allPokemon.length; i++) {
@@ -33,6 +46,8 @@ async function loadMorePokemon() {
     }
 
     currentIndex = end;
+
+    hideLoadingScreen();
 }
 
 async function loadPokemonDetails(pokemonUrl) {
