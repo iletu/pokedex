@@ -6,6 +6,11 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+main {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
 
 header {
 
@@ -597,4 +602,69 @@ img {
 
 .load-more-button:hover {
     background-color: #c92d2d;
+}
+
+
+/* -------------------------------------------------- */
+/* Responsive */
+/* -------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 24px 16px;
+    }
+
+    .pokedex-logo {
+        margin-bottom: 20px;
+    }
+
+    .pokedex-logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .pokedex-logo h1 {
+        font-size: 28px;
+    }
+
+    .search {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+
+        gap: 8px;
+    }
+
+    .search input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .search button {
+        flex-shrink: 0;
+    }
+}
+
+
+footer {
+    width: 100%;
+    padding: 24px;
+
+    text-align: center;
+
+    background-color: #f2f2f2;
+}
+
+footer p {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    color: #777;
+}
+
+footer img {
+    width: 32px;
+    padding: 0;
+    margin-bottom: 8px;
 }
