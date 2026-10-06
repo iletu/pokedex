@@ -22,13 +22,26 @@ async function fetchPokemonData() {
 
 
 async function loadMorePokemon() {
+    let searchInput = document.getElementById('search-input');
+
+    if (searchInput.value.length >= 3) {
+        searchInput.value = '';
+
+        document.getElementById('pokemon-card').innerHTML = '';
+
+        for (let i = 0; i < loadedPokemon.length; i++) {
+            renderPokemonCard(loadedPokemon[i]);
+        }
+
+        return;
+    }
+
     showLoadingScreen();
 
     let end = currentIndex + pokemonPerLoad;
 
     for (let i = currentIndex; i < end && i < allPokemon.length; i++) {
         let pokemonUrl = allPokemon[i].url;
-
         await loadPokemonDetails(pokemonUrl);
     }
 
