@@ -7,9 +7,26 @@
 }
 
 
+html,
+body {
+    min-height: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
 main {
+    width: 100%;
     max-width: 1440px;
     margin: 0 auto;
+
+    flex: 1;
 }
 
 
