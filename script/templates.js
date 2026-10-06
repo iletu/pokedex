@@ -47,9 +47,7 @@ function renderPokemonDialog(pokemon) {
 
             <div class="pokemon-dialog-image ${pokemonBackground(pokemon)}">
 
-                <button class="pokemon-arrow" onclick="previousPokemon()">
-                    &lt;
-                </button>
+                ${renderPreviousButton(pokemon)}
 
                 <img src="${pokemon.sprites.other['official-artwork'].front_default}">
 
@@ -66,6 +64,21 @@ function renderPokemonDialog(pokemon) {
 
         </div>
     `;
+}
+
+
+function renderPreviousButton(pokemon) {
+    if (pokemon.id > 1) {
+        return `
+            <button class="pokemon-arrow" onclick="previousPokemon()">
+                &lt;
+            </button>
+        `;
+    } else {
+        return `
+            <div class="pokemon-arrow-placeholder"></div>
+        `;
+    }
 }
 
 

@@ -134,6 +134,10 @@
     cursor: pointer;
 }
 
+.pokemon-arrow-placeholder {
+    width: 32px;
+}
+
 
 /* -------------------------------------------------- */
 /* Base Stats */
